@@ -185,8 +185,7 @@ class LightifyLamp extends LightifyPlug {
     var rgb;
 
     super.update(properties);
-    if (lightify.isColorSupported(this.props.type)) {// TBD: for the future...
-    } else if (lightify.isTemperatureSupported(this.props.type)) {
+    if (lightify.isTemperatureSupported(this.props.type)) {
       rgb = colortemp.colorTemperature2rgb(this.props.temperature);
       this.props.rgb = [ rgb.red, rgb.green, rgb.blue ];
       this.props.hsv = colorconv.rgb.hsv(this.props.rgb);
@@ -200,8 +199,7 @@ class LightifyLamp extends LightifyPlug {
     if (lightify.isBrightnessSupported(this.props.type)) {
       lightService.getCharacteristic(Characteristic.Brightness).updateValue(this.props.brightness);
     }
-    if (lightify.isColorSupported(this.props.type)) {// TBD: for the future...
-    } else if (lightify.isTemperatureSupported(this.props.type)) {
+    if (lightify.isTemperatureSupported(this.props.type)) {
       lightService.getCharacteristic(Characteristic.Hue).updateValue(this.props.hsv[0]);
       lightService.getCharacteristic(Characteristic.Saturation).updateValue(this.props.hsv[1]);
     }
@@ -218,8 +216,7 @@ class LightifyLamp extends LightifyPlug {
 
   setBrightness(value, callback) {
     lightify.node_brightness(this.mac, value);
-    if (lightify.isColorSupported(this.props.type)) {// TBD: for the future...
-    } else if (lightify.isTemperatureSupported(this.props.type)) {
+    if (lightify.isTemperatureSupported(this.props.type)) {
       this.flush();
     }
     callback();
@@ -257,8 +254,7 @@ class LightifyLamp extends LightifyPlug {
   setHue(value, callback) {
     this.props.hsv[0] = value;
 
-    if (lightify.isColorSupported(this.props.type)) {// TBD: for the future...
-    } else if (lightify.isTemperatureSupported(this.props.type)) {
+    if (lightify.isTemperatureSupported(this.props.type)) {
       this.setTemperature();
     }
     callback();
@@ -278,8 +274,7 @@ class LightifyLamp extends LightifyPlug {
   setSaturation(value, callback) {
     this.props.hsv[1] = value;
 
-    if (lightify.isColorSupported(this.props.type)) {// TBD: for the future...
-    } else if (lightify.isTemperatureSupported(this.props.type)) {
+    if (lightify.isTemperatureSupported(this.props.type)) {
       this.setTemperature();
     }
     callback();
@@ -313,9 +308,7 @@ class LightifyLamp extends LightifyPlug {
                   .on('set', this.setBrightness.bind(this))
                   .on('get', this.getBrightness.bind(this));
     }
-    if (lightify.isColorSupported(this.props.type)) {
-      this.platform.log.err('color bulbs not yet implemented!');
-    } else if (lightify.isTemperatureSupported(this.props.type)) {
+    if (lightify.isTemperatureSupported(this.props.type)) {
       lightService.getCharacteristic(Characteristic.Hue)
                   .on('set', this.setHue.bind(this))
                   .on('get', this.getHue.bind(this));
