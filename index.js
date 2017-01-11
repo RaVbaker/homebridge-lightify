@@ -78,7 +78,7 @@ class LightifyPlatform {
           self.log.warn('unknown Lightify device type: ' + device.type);
         }
       });
-      callback(accessories);
+      callback(_.compact(accessories));
     });
   }
 }
